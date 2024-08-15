@@ -4,14 +4,13 @@ class Solution:
         right = len(nums) - 1
 
         while left <= right :
-            mid = int((right + left) / 2)
-            midValue = nums[mid]
+            mid = (right + left) // 2
 
-            if midValue > target:
+            if nums[mid] > target:
                 right = mid - 1
-            elif midValue < target:
+            elif nums[mid] < target:
                 left = mid + 1
-            elif midValue == target:
+            elif nums[mid] == target:
                 return mid
 
         return -1
