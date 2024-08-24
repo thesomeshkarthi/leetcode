@@ -1,11 +1,16 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        integerMap = {}
+        left = 0 
+        right = len(numbers) - 1
 
-        for i, n in enumerate(numbers):
-            value = target - n
-            if value in integerMap:
-                return [integerMap[value] + 1, i + 1]
-            else:
-                integerMap[n] = i
-        return 
+        while left < right:
+            res = numbers[left] + numbers[right]
+
+            if res == target:
+                return (left + 1, right + 1)
+            elif res > target:
+                right -= 1
+            elif res < target:
+                left += 1
+
+ 
