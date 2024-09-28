@@ -1,50 +1,33 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
+        # Edge case: if s1 is longer than s2, it can't be a substring
+        if len(s1) > len(s2):
+            return False
+
+        # Create frequency maps for s1 and the first window in s2
+        s1map = [0] * 26
+        windowMap = [0] * 26
         
-        s1map = {}
+        # Fill the frequency map for s1
         for char in s1:
-            if char in s1map:
-                s1map[char] += 1
-            else:
-                s1map[char] = 1
+            s1map[ord(char) - ord('a')] += 1
+
+        # Initialize the window map with the first 'len(s1)' characters of s2
+        for i in range(len(s1)):
+            windowMap[ord(s2[i]) - ord('a')] += 1
         
-        l = 0
-        r = 0
-
-        while r <= len(s2) - 1:
-            while r <= len(s2) - 1 and s2[r] not in s1map:
-                r += 1
-            l = r
-            nextStart = r + 1
-            r += (len(s1) - 1)
-
-            if r > len(s2) - 1:
-                return False
-
-            temp = s1map.copy()
-            resultFound = True
-
-            while l <= r:
-                if s2[l] not in temp:
-                    resultFound = False
-                    break
-                if temp[s2[l]] == 0:
-                    resultFound = False
-                    break
-
-                temp[s2[l]] -= 1
-                l += 1 
-            
-            if resultFound:
+        # Slide the window across s2
+        for i in range(len(s2) - len(s1)):
+            # If the current window matches s1map, return True
+            if windowMap == s1map:
                 return True
             
-
-            if nextStart > len(s2) - 1:
-                return False
-            r = nextStart
-            l = nextStart
+            # Slide the window: remove the left character and add the next character
+            windowMap[ord(s2[i]) - ord('a')] -= 1
+            windowMap[ord(s2[i + len(s1)]) - ord('a')] += 1
         
-        return False
+        # Check the last window
+        return windowMap == s1map
 
 
 
