@@ -16,8 +16,7 @@ class Solution:
                 r = mid - 1
         
 
-        res = min(res, nums[l])
-        return res
+        return min(res, nums[l])
         
 
 
