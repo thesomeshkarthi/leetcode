@@ -1,0 +1,31 @@
+class OrderedStream(object):
+
+    def __init__(self, n):
+        """
+        :type n: int
+        """
+        self.stream = [None] * n
+        self.ptr = 0   # pointer for the next expected index (0-based)
+
+    def insert(self, idKey, value):
+        """
+        :type idKey: int
+        :type value: str
+        :rtype: List[str]
+        """
+        index = idKey - 1
+        self.stream[index] = value
+
+        result = []
+        # If we just filled the pointer position, collect as many consecutive values as possible
+        while self.ptr < len(self.stream) and self.stream[self.ptr] is not None:
+            result.append(self.stream[self.ptr])
+            self.ptr += 1
+
+        return result
+        
+
+
+# Your OrderedStream object will be instantiated and called as such:
+# obj = OrderedStream(n)
+# param_1 = obj.insert(idKey,value)
